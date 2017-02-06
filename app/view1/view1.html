@@ -1,1 +1,11 @@
 <p>This is the partial for view 1.</p>
+<p>
+    <a ui-sref="dashboard.express-overhead">Dashboard</a>
+    <a ui-sref="view2">view2</a>
+</p>
+<ui-view></ui-view>
+<div class="post" ng-repeat="post in posts">
+    <h2>{{post.title | uppercase}}</h2>
+    <p><i>{{post.userId}}:{{post.id}}</i></p>
+    <blockquote>{{post.body}}</blockquote>
+</div>

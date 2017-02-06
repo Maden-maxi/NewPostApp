@@ -1,0 +1,22 @@
+<md-toolbar>
+    <div class="md-toolbar-tools">
+        <md-button ng-click="logout()" class="md-raised md-danger" ui-sref="index">
+            <i class="material-icons">exit_to_app</i>
+            Вийти
+        </md-button>
+        <md-nav-bar md-selected-nav-item="selectedNavItem" nav-bar-aria-label="navigation links">
+            <md-nav-item class="md-primary" md-nav-sref="dashboard.express-overhead" name="express-overhead">Створити експресс накладну</md-nav-item>
+            <md-nav-item class="md-primary" md-nav-sref="dashboard.history" name="history">Історія експресс накладних</md-nav-item>
+        </md-nav-bar>
+        <span flex></span>
+        <md-button class="md-raised" aria-label="Learn More">
+            {{user.ContactPerson.Description}}
+        </md-button>
+        <md-button class="md-fab md-mini" aria-label="Favorite">
+            <i class="material-icons">account_box</i>
+        </md-button>
+    </div>
+</md-toolbar>
+<div class="container">
+    <ui-view></ui-view>
+</div>

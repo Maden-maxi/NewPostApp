@@ -1,0 +1,133 @@
+<div class="md-toolbar-tools" layout-gt-xs="row" style="margin: 20px auto">
+    <md-input-container flex-gt-xs="25">
+        <md-datepicker ng-model="fromDate" ng-change="setDateTimeFrom(fromDate)" placeholder="Дата від"></md-datepicker>
+    </md-input-container>
+    <md-input-container flex-gt-xs="25">
+        <md-datepicker ng-model="toDate" ng-change="setDateTimeTo(toDate)" placeholder="Дата до" md-min-date="fromDate"></md-datepicker>
+    </md-input-container>
+    <md-input-container flex-gt-xs="15">
+        <label for="recipientName">Имя</label>
+        <input type="text" id="recipientName" ng-model="search.RecipientContactPerson">
+    </md-input-container>
+    <md-input-container flex-gt-xs="15">
+        <label for="recipientPhone">Телефон</label>
+        <input type="text" id="recipientPhone" ng-model="search.RecipientContactPhone">
+    </md-input-container>
+    <md-input-container flex-gt-xs="20">
+        <label>Статус друку</label>
+        <md-select ng-model="search.Printed">
+            <md-option ng-repeat="status in printStatuses" ng-value="status.code">
+                {{status.desc}}
+            </md-option>
+        </md-select>
+    </md-input-container>
+</div>
+<div flex="5"></div>
+<md-content layout="column" layout-padding class="md-padding rounded">
+    <md-list flex>
+        <md-toolbar layout="row" class="md-hue-3">
+            <div class="md-toolbar-tools">
+                <div flex="15">
+                    <b>Номер ТТН</b>
+                </div>
+                <div flex="15">
+                    <b>Дата Cтворення</b>
+                </div>
+                <div flex="15">
+                    <b>Дата Відправки</b>
+                </div>
+                <div flex="15">
+                    <b>Вартість перевезення</b>
+                </div>
+                <div flex="25" layout="column">
+                    <b>Данні покупця</b>
+                </div>
+                <div flex="15">
+                    <b>Статус друку</b>
+                </div>
+            </div>
+        </md-toolbar>
+
+        <md-list-item ng-style="{background: $odd ? '#ff635b' : '#FF392E', color: '#fff'}" class="md-3-line express-invoice" ng-repeat="item in eoList | filter:search" ng-click="null">
+            <div flex="15" ng-bind="item.IntDocNumber"></div>
+            <div flex="15" ng-bind="item.CreateTime"></div>
+            <div flex="15" ng-bind="item.EstimatedDeliveryDate"></div>
+            <div flex="15">{{item.CostOnSite + ' грн.'}}</div>
+            <div flex="25" layout="column">
+                <div ng-bind="item.RecipientDescription"></div>
+                <b ng-bind="item.RecipientContactPerson"></b>
+                <div ng-bind="item.RecipientContactPhone"></div>
+                <b ng-bind="item.CityRecipientDescription"></b>
+                <address ng-bind="item.RecipientAddressDescription"></address>
+            </div>
+            <div flex="15">
+                <md-checkbox class="md-primary"
+                             ng-model="itemPrinted"
+                             ng-init="itemPrinted = item.Printed == '1' ? true : false"
+                             ng-change="itemPrinted ? item.Printed = '1' : item.Printed = '0'"
+                             ng-disabled="true"
+                             aria-label="Printed">
+                    {{item.Printed == '1' ? 'Роздруковано' : 'Не роздруковано'}}
+                </md-checkbox>
+                <md-button class="md-primary md-fab"
+                           ng-if="item.Printed == '0'"
+                           ng-click="updateExpressInvoice($event, item, user)">
+                    <i class="material-icons">create</i>
+                    <md-tooltip md-direction="top">Редагувати</md-tooltip>
+                </md-button>
+                <md-button class="md-fab md-danger"
+                           ng-click="deleteExpressInvoice($event, item.Ref)">
+                    <i class="material-icons">delete</i>
+                    <md-tooltip md-direction="top">Видалити</md-tooltip>
+                </md-button>
+                <md-button class="md-fab md-warn" ng-if="item.Printed == '0'"
+                           ng-click="printDoc($event, {ref: item.Ref, status: item.Printed} )">
+                    <i class="material-icons">print</i>
+                    <md-tooltip md-direction="Bottom">Роздрукувати ЕН</md-tooltip>
+                </md-button>
+                <md-button class="md-fab md-success"
+                           ng-click="printDoc($event, item.Ref, true)">
+                    <i class="material-icons">receipt</i>
+                    <md-tooltip md-direction="bottom">Роздрукувати маркування</md-tooltip>
+                </md-button>
+            </div>
+            <md-divider ng-if="!$last"></md-divider>
+        </md-list-item>
+
+    </md-list>
+</md-content>
+
+<!--
+
+<table style="width: 100%; text-align: center; vertical-align: middle">
+    <thead>
+        <tr>
+            <td>Номер ТТН</td>
+            <td>Дата Відправки</td>
+            <td>Вартість перевозки</td>
+            <td>Данні покупця</td>
+            <td>Дата створення</td>
+            <td>Дата друкування</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="item in eoList">
+            <td ng-bind="item.IntDocNumber"></td>
+            <td ng-bind="item.EstimatedDeliveryDate"></td>
+            <td ng-bind="item.CostOnSite"></td>
+            <td>
+                <div ng-bind="item.RecipientDescription"></div>
+                <div ng-bind="item.RecipientContactPerson"></div>
+                <div ng-bind="item.RecipientContactPhone"></div>
+                <div ng-bind="item.RecipientAddressDescription"></div>
+            </td>
+            <td ng-bind="item.CreateTime"></td>
+            <td ng-bind="item.DateLastPrint || 'недруковане'"></td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td></td>
+        </tr>
+    </tfoot>
+</table>-->

@@ -1,0 +1,202 @@
+<div layout="column" class="container">
+    <md-toolbar class="rounded">
+        <div class="md-toolbar-tools">
+            <md-button  ui-sref="index" class="md-fab md-mini md-warn" aria-label="Go Home">
+                    <i class="material-icons" style="color: greenyellow">home</i>
+            </md-button>
+
+            <h2>
+                <span>Форма Реєстрації</span>
+            </h2>
+            <span flex></span>
+            <md-button class="md-fab md-mini" aria-label="Favorite">
+                <i class="material-icons">accessibility</i>
+            </md-button>
+        </div>
+    </md-toolbar>
+
+    <md-content layout-padding="">
+        <form action="/" method="post" name="RegForm">
+
+            <div layout="row" layout-xs="column" layout-wrap>
+
+                <md-input-container flex="33" flex-xs="100">
+                    <label for="lastName">Прізвище</label>
+                    <input id="lastName" name="lastName" ng-model="user.LastName" ng-minlength="2" ng-maxlength="50" ng-required="true" ng-pattern="validate.name">
+
+                    <div ng-messages="RegForm.lastName.$error" multiple md-auto-hide="true" role="alert">
+                        <div ng-message="required">{{errorMessages.required}}</div>
+                        <div ng-message-exp="[minlength, maxlength]">{{errorMessages.len.name}}</div>
+                        <div ng-message="pattern">{{errorMessages.namePattern}}</div>
+                    </div>
+                </md-input-container>
+
+                <md-input-container flex="33" flex-xs="100">
+                    <label for="firstName">Ім'я</label>
+                    <input id="firstName" name="firstName" ng-model="user.FirstName" ng-minlength="2" ng-maxlength="50" ng-required="true" ng-pattern="validate.name">
+                    <div ng-messages="RegForm.firstName.$error" multiple md-auto-hide="true" role="alert">
+                        <div ng-message="required">{{errorMessages.required}}</div>
+                        <div ng-message-exp="[minlength, maxlength]">{{errorMessages.len.name}}</div>
+                        <div ng-message="pattern">{{errorMessages.namePattern}}</div>
+                    </div>
+                </md-input-container>
+
+                <md-input-container flex="33" flex-xs="100">
+                    <label for="middleName">Побатькові</label>
+                    <input id="middleName" name="middleName" ng-model="user.MiddleName" ng-minlength="2" ng-maxlength="50" ng-required="true" ng-pattern="validate.name">
+                    <div ng-messages="RegForm.middleName.$error" multiple md-auto-hide="true" role="alert">
+                        <div ng-message="required">{{errorMessages.required}}</div>
+                        <div ng-message-exp="[minlength, maxlength]">{{errorMessages.len.name}}</div>
+                        <div ng-message="pattern">{{errorMessages.namePattern}}</div>
+                    </div>
+                </md-input-container>
+
+                <md-input-container flex="50" flex-xs="100">
+                    <label for="email">Email</label>
+                    <input id="email" type="email" name="email" ng-model="user.Email" ng-minlength="10" ng-maxlength="100" ng-pattern="/^.+@.+\..+$/" ng-required="true">
+                    <div ng-messages="RegForm.email.$error" multiple md-auto-hide="true" role="alert">
+                        <div ng-message-exp="[minlength, maxlength]">
+                            {{errorMessages.len.email}}
+                        </div>
+                        <div ng-message="pattern">
+                            {{errorMessages.emailPattern}}
+                        </div>
+                        <div ng-message="required">
+                            {{errorMessages.required}}
+                        </div>
+                    </div>
+                </md-input-container>
+
+                <md-input-container flex="50" flex-xs="100">
+                    <label for="phone"><span hide>Телефон</span></label>
+                    <input ui-mask="+38(999)999-99-99" aria-label="phone" id="phone" name="phone" ng-model="user.Phone" ng-minlength="9" ng-required="true">
+                    <div ng-messages="RegForm.phone.$error">
+                        <div ng-message="required">{{errorMessages.required}}</div>
+                    </div>
+                </md-input-container>
+
+                <md-input-container flex="50" flex-xs="100">
+                    <label for="password">Пароль</label>
+                    <input type="password" aria-label="Password" id="password" name="password" ng-model="user.password" ng-minlength="8" ng-required="true">
+                    <div ng-messages="RegForm.password.$error">
+                        <div ng-message="required">{{errorMessages.required}}</div>
+                        <div ng-message="minlength">Пароль занадто короткий</div>
+                    </div>
+                </md-input-container>
+
+                <md-input-container flex="50" flex-xs="100">
+                    <label for="passwordConfirm">Підтверження пароля</label>
+                    <input type="password" aria-label="Password Confirm" id="passwordConfirm" name="passwordConfirm" ng-model="passwordConfirm" ng-minlength="8" ng-required="true">
+                    <div ng-messages="RegForm.passwordConfirm.$error">
+                        <div ng-message="required">{{errorMessages.required}}</div>
+                        <div ng-message="minlength">Пароль занадто короткий</div>
+                    </div>
+                    <div ng-show="!equalPasswords() && RegForm.passwordConfirm.$dirty">Паролі неспівпадають</div>
+                </md-input-container>
+
+            </div>
+
+            <div layout="row">
+                <md-input-container flex>
+                    <label>Откуда отправлять</label>
+                    <md-select ng-model="typeAddr" ng-required="true">
+                        <md-option ng-repeat="typeAddress in ['Отделение', 'Ваш адрес']" ng-value="typeAddress">
+                            {{typeAddress}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+                <md-autocomplete
+                        ng-show="typeAddr"
+                        flex
+                        required
+                        ng-disabled="false"
+                        md-no-cache="true"
+                        md-input-name="city"
+                        md-selected-item="selectedCity"
+                        md-selected-item-change="getStreets(selectedCity)"
+                        md-search-text="searchCity"
+                        md-items="city in cities | filter:searchCity"
+                        md-item-text="city.Description"
+                        md-min-length="0"
+                        placeholder="Населений пункт">
+                    <md-item-template>
+                        <span md-highlight-text="searchCity" md-highlight-flags="^i">{{city.Description}}</span>
+                    </md-item-template>
+                    <md-not-found>
+                        Населений пункт "{{searchCity}}" не знайдено.
+                    </md-not-found>
+                    <div ng-messages="RegForm.city.$error">
+                        <div ng-message="required">{{errorMessages.required}}</div>
+                    </div>
+                </md-autocomplete>
+            </div>
+
+            <div ng-if="user.City.Ref">
+                <div layout="row" ng-if="typeAddr == 'Ваш адрес'">
+                    <div class="md-block" flex-gt-xs>
+                        <md-autocomplete
+                                ng-disabled="false"
+                                md-no-cache="true"
+                                ng-required="typeAddr == 'Ваш адрес'"
+                                md-selected-item="selectedStreet"
+                                md-selected-item-change="searchStreetChange(selectedStreet)"
+                                md-search-text="searchStreet"
+                                md-items="street in streets | filter: searchStreet"
+                                md-item-text="street.Description"
+                                md-min-length="0"
+                                placeholder="Вулиця">
+                            <md-item-template>
+                                <span md-highlight-text="searchStreet" md-highlight-flags="^i">{{street.Description}}</span>
+                            </md-item-template>
+                            <md-not-found>
+                                No states matching "{{searchStreet}}" were found.
+                            </md-not-found>
+                        </md-autocomplete>
+                    </div>
+                    <md-input-container class="md-block" flex-gt-xs>
+                        <label for="house">Будинок</label>
+                        <input id="house" ng-model="user.House" name="house" ng-required="typeAddr == 'Ваш адрес'">
+                        <div ng-messages="RegForm.house.$error" multiple md-auto-hide="true" role="alert">
+                            <div ng-message="required">{{errorMessages.required}}</div>
+                            <div ng-message-exp="[minlength, maxlength]">{{errorMessages.len.name}}</div>
+                        </div>
+                    </md-input-container>
+                    <md-input-container class="md-block" flex-gt-xs>
+                        <label for="flat">Квартира</label>
+                        <input id="flat" ng-model="user.Flat" name="apartment" ng-required="typeAddr == 'Ваш адрес'">
+                        <div ng-messages="RegForm.apartment.$error" multiple md-auto-hide="true" role="alert">
+                            <div ng-message="required">{{errorMessages.required}}</div>
+                            <div ng-message-exp="[minlength, maxlength]">{{errorMessages.len.name}}</div>
+                        </div>
+                    </md-input-container>
+                </div>
+
+                <div layout="row" ng-if="warehouses && typeAddr == 'Отделение'">
+                    <md-input-container class="md-block" flex-gt-xs>
+                        <label>Склад</label>
+                        <md-select ng-model="warehouse" md-on-close="logWarehouse(warehouse)" ng-required="typeAddr == 'Отделение'">
+                            <md-option ng-repeat="warehouse in warehouses" ng-value="warehouse">
+                                {{warehouse.Description}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+            </div>
+
+
+            <div>
+                <md-button ng-click="register(user)" ng-disabled="!(RegForm.$valid && equalPasswords())" class="md-raised md-success">Зареєструватись</md-button>
+                <md-button class="md-accent md-fab md-hue-1" ng-click="resetForm()" aria-describedby="Reset from"><i class="material-icons">restore_page</i></md-button>
+            </div>
+
+            <div style="color: darkred" ng-show="errorNotify">
+                {{errorNotify}}
+            </div>
+
+        </form>
+    </md-content>
+    <pre>
+        {{user | json}}
+        {{address | json}}
+    </pre>
+</div>

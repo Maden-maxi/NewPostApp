@@ -23,3 +23,114 @@
   content: "|";
   padding-right: 0.3em;
 }
+.md-button .material-icons{
+  vertical-align: middle;}
+
+.container{
+  max-width: 1200px;
+  margin: auto;
+}
+.container-login{
+  max-width: 600px;
+  width: 400px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+.container-login a{
+  text-decoration: none;
+  vertical-align: middle;
+  color: #fff;
+}
+.login-form{
+  background-color: #10fffd;
+}
+.rounded{
+  border-radius: 10px 10px 0 0;
+}
+.text-center{
+  text-align: center;
+}
+.md-button.md-success{
+  background-color: #69ff06;
+  color: #fff;
+}
+.md-button.md-success:hover{
+  background-color: #64c803 !important;
+}
+.md-danger.md-button{
+  background-color: #f00207;
+  color: #fff;
+}
+.md-danger.md-button:hover{
+  background-color: #b30002 !important;
+}
+
+
+.express-invoice.ng-enter,
+.express-invoice.ng-leave,
+.express-invoice.ng-move {
+  transition: 0.5s linear all;
+}
+
+.express-invoice.ng-enter,
+.express-invoice.ng-move {
+  height: 0;
+  opacity: 0;
+  overflow: hidden;
+}
+
+.express-invoice.ng-enter.ng-enter-active,
+.express-invoice.ng-move.ng-move-active {
+  height: 120px;
+  opacity: 1;
+}
+
+.express-invoice.ng-leave {
+  opacity: 1;
+  overflow: hidden;
+}
+
+.express-invoice.ng-leave.ng-leave-active {
+  height: 0;
+  opacity: 0;
+  padding-bottom: 0;
+  padding-top: 0;
+}
+
+
+.ng-enter,
+.ng-leave,
+.ng-move {
+  transition: 0.5s linear all;
+}
+
+.ng-enter,
+.ng-move {
+  height: 0;
+  opacity: 0;
+  overflow: hidden;
+}
+
+.ng-enter.ng-enter-active,
+.ng-move.ng-move-active {
+  height: 120px;
+  opacity: 1;
+}
+
+.ng-leave {
+  opacity: 1;
+  overflow: hidden;
+}
+
+.ng-leave.ng-leave-active {
+  height: 0;
+  opacity: 0;
+  padding-bottom: 0;
+  padding-top: 0;
+}

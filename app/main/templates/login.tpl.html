@@ -1,0 +1,63 @@
+<div layout="column" class="container login-page">
+    <div class="container-login">
+        <md-toolbar class="rounded">
+            <div class="md-toolbar-tools">
+                <md-button class="md-fab md-mini md-warn" aria-label="Go Home">
+                    <a ui-sref="index">
+                        <i class="material-icons" style="color: greenyellow">home</i>
+                    </a>
+                </md-button>
+                <h2>
+                    <span>Форма Входу</span>
+                </h2>
+            </div>
+        </md-toolbar>
+
+        <md-content class="login-form" layout-padding>
+            <form  action="/" method="post" name="LoginForm" novalidate>
+
+                <div layout="column" layout-xs="column" layout-wrap>
+
+                    <md-input-container flex>
+                        <label for="email">Email</label>
+                        <input required id="email" type="email" name="email" ng-model="credentials.email" minlength="10" maxlength="100" ng-pattern="/^.+@.+\..+$/">
+
+                        <div ng-messages="LoginForm.email.$error" multiple="" md-auto-hide="true" role="alert">
+                            <div ng-message="minlength">
+                                Довжина емайлу неповина будти меньшою ніж 10 символів
+                            </div>
+                            <div ng-message="maxlength">
+                                Довжина емайлу неповина будти більшою ніж 50 символів
+                            </div>
+                            <div ng-message="pattern">
+                                Невірний формат емайла. Приклад як потрибно: test@mail.com
+                            </div>
+                            <div ng-message="required">
+                                {{errorMessages.required}}
+                            </div>
+                        </div>
+                    </md-input-container>
+
+                    <md-input-container flex="">
+                        <label for="password">Пароль</label>
+                        <input type="password" aria-label="Password" id="password" name="password" ng-model="credentials.password" required>
+                        <div ng-messages="LoginForm.password.$error">
+                            <div ng-message="required">{{errorMessages.required}}</div>
+                        </div>
+                    </md-input-container>
+
+                </div>
+
+                <div ng-show="wrongCredentials" style="color: red">
+                    Невірний емайл чи пароль чи пароль
+                </div>
+
+                <div>
+                    <md-button ng-click="login(credentials)" class="md-raised md-primary">Увійти</md-button>
+                </div>
+
+            </form>
+        </md-content>
+
+    </div>
+</div>

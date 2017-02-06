@@ -1,0 +1,330 @@
+<div class="container" layout="column" layout-padding>
+    <form style="background-color: #10fffd; border-radius: 5px" action="/" name="ExpressOverhead" method="post">
+        <h3>Данні покупця</h3>
+        <div layout-gt-xs="row">
+            <md-input-container class="md-block" flex-gt-sm>
+                <label>Оберить контрагента</label>
+                <md-select aria-label="Оберить контрагента" ng-model="counterparty" md-on-close="selectCounterparty(counterparty)">
+                    <md-option ng-value="false">---</md-option>
+                    <md-option ng-repeat="counterparty in directory.counterparties" ng-value="counterparty">
+                        {{counterparty.Description}}
+                    </md-option>
+                </md-select>
+            </md-input-container>
+            <div class="md-block" flex-gt-sm ng-if="expressInvoice.recipient.ContactPerson.Ref">
+                <md-list>
+                    <div ng-style="{background: '#fff'}" class="md-no-sticky" layout="row">
+                        <md-input-container class="md-block" flex>
+                            <label>Ім'я</label>
+                            <input ng-model="expressInvoice.recipient.FirstName" name="firstName" ng-minlength="2" ng-maxlength="50" ng-required="true" ng-disabled="true" ng-pattern="validate.name">
+                            <div ng-messages="ExpressOverhead.firstName.$error" multiple md-auto-hide="true" role="alert">
+                                <div ng-message="required">{{errorMessages.required}}</div>
+                                <div ng-message-exp="[minlength, maxlength]">{{errorMessages.len.name}}</div>
+                                <div ng-message="pattern">{{errorMessages.namePattern}}</div>
+                            </div>
+                        </md-input-container>
+                        <md-input-container class="md-block" flex>
+                            <label>Прізвище</label>
+                            <input ng-model="expressInvoice.recipient.LastName" name="lastName" ng-minlength="2" ng-maxlength="50" ng-required="true" ng-disabled="true" ng-pattern="validate.name">
+                            <div ng-messages="ExpressOverhead.lastName.$error" multiple md-auto-hide="true" role="alert">
+                                <div ng-message="required">{{errorMessages.required}}</div>
+                                <div ng-message-exp="[minlength, maxlength]">{{errorMessages.len.name}}</div>
+                                <div ng-message="pattern">{{errorMessages.namePattern}}</div>
+                            </div>
+                        </md-input-container>
+                        <md-input-container ng-show="expressInvoice.recipient.MiddleName" class="md-block" flex>
+                            <label ng-show="expressInvoice.recipient.MiddleName">По батькові</label>
+                            <input ng-model="expressInvoice.recipient.MiddleName" name="middleName" ng-minlength="2" ng-maxlength="50" ng-disabled="true" ng-pattern="validate.name">
+                            <div ng-messages="ExpressOverhead.middleName.$error" multiple md-auto-hide="true" role="alert">
+                                <div ng-message="required">{{errorMessages.required}}</div>
+                                <div ng-message-exp="[minlength, maxlength]">{{errorMessages.len.name}}</div>
+                                <div ng-message="pattern">{{errorMessages.namePattern}}</div>
+                            </div>
+                        </md-input-container>
+                    </div>
+                    <md-list-item class="contact-item" ng-style="{background: 'red', color: 'white'}">
+                        <img ng-style="{background: 'white'}" ng-src="{{contactImage}}" class="md-avatar" alt="{{expressInvoice.recipient.ContactPerson.Description}}" />
+                        <div class="md-list-item-text compact" layout="row">
+                            <md-input-container ng-show="expressInvoice.recipient.Email" class="md-block" flex>
+                                <label>Email</label>
+                                <input type="email" name="email" ng-model="expressInvoice.recipient.Email" ng-minlength="10" ng-maxlength="100" ng-disabled="true" ng-pattern="validate.email" >
+                                <div ng-messages="ExpressOverhead.email.$error" multiple md-auto-hide="true" role="alert">
+                                    <div ng-message-exp="[minlength, maxlength]">
+                                        {{errorMessages.len.email}}
+                                    </div>
+                                    <div ng-message="pattern">
+                                        {{errorMessages.emailPattern}}
+                                    </div>
+                                    <div ng-message="required">
+                                        {{errorMessages.required}}
+                                    </div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex>
+                                <label><span>Телефон</span></label>
+                                <input ui-mask="+38(999)999-99-99" aria-label="phone" name="phone" ng-model="expressInvoice.recipient.Phone" ng-disabled="true" ng-minlength="9" ng-required="true">
+                                <div ng-messages="ExpressOverhead.phone.$error">
+                                    <div ng-message="required">{{errorMessages.required}}</div>
+                                </div>
+                            </md-input-container>
+                        </div>
+                    </md-list-item>
+                </md-list>
+            </div>
+        </div>
+
+        <div layout-gt-xs="row" ng-if="!expressInvoice.recipient.ContactPerson.Ref">
+            <md-input-container class="md-block" flex-gt-xs>
+                <label>Ім'я</label>
+                <input ng-model="expressInvoice.recipient.FirstName" name="firstName" ng-minlength="2" ng-maxlength="50" ng-required="true"  ng-pattern="validate.name">
+                <div ng-messages="ExpressOverhead.firstName.$error" multiple md-auto-hide="true" role="alert">
+                    <div ng-message="required">{{errorMessages.required}}</div>
+                    <div ng-message-exp="[minlength, maxlength]">{{errorMessages.len.name}}</div>
+                    <div ng-message="pattern">{{errorMessages.namePattern}}</div>
+                </div>
+            </md-input-container>
+            <md-input-container class="md-block" flex-gt-xs>
+                <label>Прізвище</label>
+                <input ng-model="expressInvoice.recipient.LastName" name="lastName" ng-minlength="2" ng-maxlength="50" ng-required="true" ng-pattern="validate.name">
+                <div ng-messages="ExpressOverhead.lastName.$error" multiple md-auto-hide="true" role="alert">
+                    <div ng-message="required">{{errorMessages.required}}</div>
+                    <div ng-message-exp="[minlength, maxlength]">{{errorMessages.len.name}}</div>
+                    <div ng-message="pattern">{{errorMessages.namePattern}}</div>
+                </div>
+            </md-input-container>
+            <md-input-container class="md-block" flex-gt-xs>
+                <label>По батькові</label>
+                <input ng-model="expressInvoice.recipient.MiddleName" name="middleName" ng-minlength="2" ng-maxlength="50" ng-pattern="validate.name">
+                <div ng-messages="ExpressOverhead.middleName.$error" multiple md-auto-hide="true" role="alert">
+                    <div ng-message="required">{{errorMessages.required}}</div>
+                    <div ng-message-exp="[minlength, maxlength]">{{errorMessages.len.name}}</div>
+                    <div ng-message="pattern">{{errorMessages.namePattern}}</div>
+                </div>
+            </md-input-container>
+        </div>
+
+        <div layout-gt-xs="row" ng-if="!expressInvoice.recipient.ContactPerson.Ref">
+            <md-input-container  class="md-block" flex-gt-xs>
+                <label for="email">Email</label>
+                <input id="email" type="email" name="email" ng-model="expressInvoice.recipient.Email" ng-minlength="10" ng-maxlength="100" ng-pattern="validate.email" >
+                <div ng-messages="ExpressOverhead.email.$error" multiple md-auto-hide="true" role="alert">
+                    <div ng-message-exp="[minlength, maxlength]">
+                        {{errorMessages.len.email}}
+                    </div>
+                    <div ng-message="pattern">
+                        {{errorMessages.emailPattern}}
+                    </div>
+                    <div ng-message="required">
+                        {{errorMessages.required}}
+                    </div>
+                </div>
+            </md-input-container>
+            <md-input-container class="md-block" flex-gt-xs>
+                <label for="phone"><span hide>Телефон</span></label>
+                <input ui-mask="+38(999)999-99-99" aria-label="phone" id="phone" name="phone" ng-model="expressInvoice.recipient.Phone" ng-minlength="9" ng-required="true">
+                <div ng-messages="ExpressOverhead.phone.$error">
+                    <div ng-message="required">{{errorMessages.required}}</div>
+                </div>
+            </md-input-container>
+        </div>
+
+        <h3>Данні доставки</h3>
+        <div layout-gt-xs="row">
+            <md-input-container class="md-block" flex-gt-xs>
+                <label>Тип доставки</label>
+                <md-select ng-model="expressInvoice.ServiceType">
+                    <md-option ng-repeat="service in directory.serviceTypes" ng-value="service">
+                        {{service.Description}}
+                    </md-option>
+                </md-select>
+            </md-input-container>
+            <div class="md-block" ng-show="expressInvoice.ServiceType" flex-gt-sm>
+                <md-autocomplete
+                        ng-disabled="false"
+                        md-no-cache="true"
+                        md-selected-item="selectedCity"
+                        md-selected-item-change="getStreets(selectedCity)"
+                        md-search-text="searchCity"
+                        md-search-text-change="searchCityChange(searchCity)"
+                        md-items="city in directory.cities | filter:searchCity"
+                        md-item-text="city.Description"
+                        md-min-length="0"
+                        placeholder="Населений пункт">
+                    <md-item-template>
+                        <span md-highlight-text="searchCity" md-highlight-flags="^i">{{city.Description}}</span>
+                    </md-item-template>
+                    <md-not-found>
+                        Населений пункт "{{searchCity}}" не знайдено.
+                    </md-not-found>
+                </md-autocomplete>
+            </div>
+
+            <md-input-container class="md-block" flex-gt-xs>
+                <md-datepicker ng-model="expressInvoice.DateTime" md-min-date="minDate" placeholder="Оберіть дату"></md-datepicker>
+            </md-input-container>
+        </div>
+        <div layout-gt-xs="row">
+            <div flex="100">
+                <div ng-if="expressInvoice.ServiceType.Ref == 'WarehouseWarehouse' && expressInvoice.recipient.City.Ref">
+                    <md-input-container class="md-block" flex-gt-xs>
+                        <label>Склад</label>
+                        <md-select ng-model="warehouse"
+                                   md-on-close="setRecipientAddress(warehouse)"
+                                   aria-label="Warehouse"
+                                   ng-required="true">
+                            <md-option ng-repeat="wh in warehouses" ng-value="wh">
+                                {{wh.Description}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+
+                </div>
+                <div ng-if="expressInvoice.ServiceType.Ref == 'WarehouseDoors' && expressInvoice.recipient.City.Ref" layout-gt-xs="row">
+                    <div class="md-block" flex-gt-xs>
+                        <md-autocomplete
+                                ng-disabled="false"
+                                md-no-cache="true"
+                                md-selected-item="selectedStreet"
+                                md-selected-item-change="searchStreetChange(selectedStreet)"
+                                md-search-text="searchStreet"
+                                md-items="street in streets | filter: searchStreet"
+                                md-item-text="street.Description"
+                                md-min-length="0"
+                                placeholder="Вулиця">
+                            <md-item-template>
+                                <span md-highlight-text="searchStreet" md-highlight-flags="^i">{{street.Description}}</span>
+                            </md-item-template>
+                            <md-not-found>
+                                No states matching "{{searchStreet}}" were found.
+                            </md-not-found>
+                        </md-autocomplete>
+                    </div>
+                    <md-input-container class="md-block" flex-gt-xs>
+                        <label for="house">Будинок</label>
+                        <input id="house" ng-model="expressInvoice.recipient.House" name="house" ng-minlength="2" ng-maxlength="50" ng-required="expressInvoice.recipient.Street">
+                        <div ng-messages="eo.house.$error" multiple md-auto-hide="true" role="alert">
+                            <div ng-message="required">{{errorMessages.required}}</div>
+                            <div ng-message-exp="[minlength, maxlength]">{{errorMessages.len.name}}</div>
+                        </div>
+                    </md-input-container>
+                    <md-input-container class="md-block" flex-gt-xs>
+                        <label for="flat">Квартира</label>
+                        <input id="flat" ng-model="expressInvoice.recipient.Flat" name="apartment" ng-minlength="2" ng-maxlength="50">
+                        <div ng-messages="eo.apartment.$error" multiple md-auto-hide="true" role="alert">
+                            <div ng-message="required">{{errorMessages.required}}</div>
+                            <div ng-message-exp="[minlength, maxlength]">{{errorMessages.len.name}}</div>
+                        </div>
+                    </md-input-container>
+                </div>
+            </div>
+        </div>
+
+        <h3>Данні посилки</h3>
+        <div layout-gt-xs="row" layout-wrap="wrap">
+            <md-input-container class="md-block" flex-gt-sm>
+                <label>Тип груза</label>
+                <md-select ng-model="expressInvoice.CargoType" ng-required="true">
+                    <md-option ng-repeat="type in directory.cargoTypes" ng-value="type">
+                        {{type.Description}}
+                    </md-option>
+                </md-select>
+            </md-input-container>
+            <md-input-container class="md-block" flex-gt-xs>
+                <label for="cost">Цінність</label>
+                <input id="cost" ng-init="expressInvoice.Cost=300.00" ng-model="expressInvoice.Cost" type="number" ng-required="true">
+            </md-input-container>
+            <md-input-container class="md-block" flex="100">
+                <label for="desc">Опис товару</label>
+                <textarea id="desc" ng-model="expressInvoice.Description" name="description" ng-required="true"></textarea>
+            </md-input-container>
+        </div>
+        <div layout-gt-xs="column" ng-if="expressInvoice.CargoType">
+            <h3>Данні місця</h3>
+            <div layout="column" ng-repeat="(index,size) in expressInvoice.locations">
+                <div layout-gt-xs="row" ng-if="expressInvoice.CargoType.Ref == 'Cargo'">
+                    <h4>Місце #{{ index+1 }}</h4>
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Ширина (см)</label>
+                        <input type="number" min="0"
+                               ng-init="size.volumetricWidth=0"
+                               ng-model="size.volumetricWidth" ng-required="true">
+                    </md-input-container>
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Висота (см)</label>
+                        <input type="number" min="0" ng-init="size.volumetricHeight=0"
+                               ng-model="size.volumetricHeight" ng-required="true">
+                    </md-input-container>
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Длинна (см)</label>
+                        <input type="number" min="0"
+                               ng-init="size.volumetricLength=0"
+                               ng-model="size.volumetricLength" ng-required="true">
+                    </md-input-container>
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Об'єм (см) <sup>3</sup></label>
+                        <input ng-disabled="true"
+                               type="number"
+                               min="0"
+                               ng-model="size.volumetricVolume"
+                               ng-bind="size.volumetricVolume = locationsCbrt(size.volumetricWidth,size.volumetricHeight,size.volumetricLength);">
+                    </md-input-container>
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Вес (кг)</label>
+                        <input type="number" min="0" ng-init="size.weight=0" ng-model="size.weight">
+                    </md-input-container>
+                </div>
+                <md-input-container ng-if="expressInvoice.CargoType.Ref == 'Documents'" class="md-block" flex-gt-sm>
+                    <label>Вес (кг)</label>
+                    <md-select ng-model="size.weight" ng-init="size.weight=0.1" ng-required="true">
+                        <md-option ng-repeat="weight in [0.1,0.5,1]" ng-value="weight">
+                            {{weight}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
+            <div layout="row" ng-if="expressInvoice.CargoType.Ref == 'Cargo'">
+                <md-button class="md-fab md-mini"
+                           aria-label="удалить"
+                           ng-disabled="expressInvoice.locations.length == 1"
+                           ng-click="expressInvoice.locations.pop()">
+                    <i class="material-icons">remove_circle_outline</i>
+                </md-button>
+                <md-button class="md-fab md-mini md-primary"
+                           aria-label="добавить"
+                           ng-disabled="expressInvoice.locations.length == 4"
+                           ng-click="expressInvoice.locations.push({})">
+                    <i class="material-icons">add_circle_outline</i>
+                </md-button>
+
+            </div>
+        </div>
+        <h3>Данні оплати</h3>
+        <div layout-gt-xs="row">
+            <md-input-container class="md-block" flex-gt-sm>
+                <label>За доставку</label>
+                <md-select ng-model="expressInvoice.TypeOfPayer" ng-required="true">
+                    <md-option ng-repeat="type in directory.typesOfPayers" ng-value="type">
+                        {{type.Description}}
+                    </md-option>
+                </md-select>
+            </md-input-container>
+            <md-input-container class="md-block" flex-gt-sm>
+                <label>За обратну доставку</label>
+                <md-select ng-model="expressInvoice.TypeOfPayerForRedelivery" ng-required="true">
+                    <md-option ng-repeat="type in directory.typesOfPayersForRedelivery" ng-value="type">
+                        {{type.Description}}
+                    </md-option>
+                </md-select>
+            </md-input-container>
+        </div>
+        <div layout-gt-xs="row">
+            <div>
+                <md-button ng-disabled="!ExpressOverhead.$valid" ng-click="CreateExpressOverhead(expressInvoice)"  class="md-raised md-success">Створити</md-button>
+                <md-button class="md-accent md-fab md-hue-1" ng-click="resetForm()"><i class="material-icons">restore_page</i></md-button>
+            </div>
+        </div>
+    </form>
+</div>
+<pre>
+    {{expressInvoice | json}}
+</pre>

@@ -1,5 +1,35 @@
-<p>This is the partial for view 2.</p>
-<p>
-  Showing of 'interpolate' filter:
-  {{ 'Current version is v%VERSION%.' | interpolate }}
-</p>
+<div>
+  <p>This is the partial for view 2.</p>
+</div>
+<md-nav-bar nav-bar-aria-label="navigation links">
+   these require actual routing with ui-router or ng-route, so they won't work in the demo
+  <md-nav-item md-nav-sref="login">login</md-nav-item>
+  <md-nav-item md-nav-sref="registration">registration</md-nav-item>
+</md-nav-bar>
+<ul style="float: left">
+  <li ng-repeat="user in $ctrl.users"><a ui-sref="view2.user({userId: user.id})">{{user.username}}</a></li>
+</ul>
+<div style="float: left" ui-view></div>
+<table class="users">
+  <thead>
+    <tr>
+      <th>ID</th><th>Username</th><th>email</th><th>Address</th><th>Phone</th><th>Website</th><th>Company</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="user" ng-repeat="user in $ctrl.users">
+      <td>{{user.id}}</td>
+      <td>{{user.username}}</td>
+      <td>{{user.email}}</td>
+      <td>
+        <div ng-repeat="(k,v) in user.address"><b>{{k}}</b>: <i>{{v}}</i></div>
+      </td>
+      <td>{{user.phone}}</td>
+      <td>{{user.website}}</td>
+      <td>
+        <div ng-repeat="(k,v) in user.company"><b>{{k}}</b>: <i>{{v}}</i></div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+

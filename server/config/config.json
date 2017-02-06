@@ -1,0 +1,7 @@
+{
+  "port": 8080,
+  "domain": "localhost",
+  "log-level": "dev",
+  "app-static": "../app",
+  "db-connection": "mongodb://localhost/site"
+}

@@ -1,0 +1,4 @@
+Code error: 42S01; <br> Error info: SQLSTATE[42S01]: Base table or view already exists: 1050 Table 'users' already existsError code:42S01;
+Error message:SQLSTATE[42S01]: Base table or view already exists: 1050 Table 'users' already exists;
+File:/home/anonymous/Public/np-app.local/app/server/DB/db.class.php. Line:45
+

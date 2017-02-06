@@ -1,0 +1,12 @@
+<div>
+    <h1>{{$ctrl.user.name}}</h1>
+    <ul>
+        <li ng-repeat="(k,v) in $ctrl.user.address"><i>{{k}}</i>: <b>{{v}}</b></li>
+    </ul>
+    <div>Website: <a ng-href="//www.{{$ctrl.user.website}}">{{$ctrl.user.website}}</a></div>
+    <div><a ng-href="{{$ctrl.user.email}}">{{$ctrl.user.email}}</a></div>
+    <ul>
+        <li ng-repeat="(k,v) in $ctrl.user.company">{{k}}:{{v}}</li>
+    </ul>
+</div>
+<a ui-sref="view2">close</a>

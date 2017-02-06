@@ -1,14 +1,11 @@
 'use strict';
 
-angular.module('myApp.view2', ['ngRoute'])
+angular.module('myApp.view2', [])
 
-.config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/view2', {
-    templateUrl: 'view2/view2.html',
-    controller: 'View2Ctrl'
-  });
-}])
-
-.controller('View2Ctrl', [function() {
-
-}]);
+.component('viewComponent2', {
+  /*controller: [ '$scope', 'users', function ($scope, users) {
+    $scope.users = users;
+  }],*/
+  bindings: {users: '<'},
+  templateUrl: 'view2/view2.html'
+});

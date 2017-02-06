@@ -1,0 +1,12 @@
+<h1 ng-bind="$ctrl.login + ' Den'"></h1>
+<h3><a ui-sref="view1">View1</a></h3>
+<form action="/">
+    <p>
+        <label for="mail">email:</label> <input id="mail" name="user" ng-model="user.email" type="email">
+    </p>
+    <p>
+        <label for="pswd">password</label> <input type="password" name="password" ng-model="user.password" id="pswd">
+    </p>
+    <b>{{user.email}}</b>
+    <p>: <i>{{user.password}}</i></p>
+</form>
