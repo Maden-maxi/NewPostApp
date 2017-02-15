@@ -1,8 +1,8 @@
 # New post app
 
-### Clone `angular-seed`
+### Clone `new-post-app`
 
-Clone the `angular-seed` repository using git:
+Clone the `new-post-app` repository using git:
 
 ```
 git clone https://github.com/Maden-maxi/NewPostApp.git
