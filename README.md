@@ -19,6 +19,11 @@ us manage and test the application.
 * In order to run the end-to-end tests, you will also need to have the
   [Java Development Kit (JDK)][jdk] installed on your machine. Check out the section on
   [end-to-end testing](#e2e-testing) for more info.
+  
+#### MongoDB
+Also, you need install mongoDB on your local machine for working with data
+Please, read install manual [Install MongoDB on linux](https://docs.mongodb.com/manual/administration/install-on-linux/)
+Manual for windows users [Install MongoDB in Windows](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/)
 
 We have preconfigured `npm` to automatically run `bower` so we can simply do:
 
@@ -35,6 +40,8 @@ two new folders in your project.
 *Note that the `bower_components` folder would normally be installed in the root folder but
 `angular-seed` changes this location through the `.bowerrc` file. Putting it in the `app` folder
 makes it easier to serve the files by a web server.*
+
+
 
 ### Run the Application
 
